@@ -1,11 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { RFValue } from 'react-native-responsive-fontsize'
+import AutoScoll from "@homielab/react-native-auto-scroll"
+import { slipData } from '@utils/db'
+import Icon from '@components/atoms/Icon'
 
 const FilmSlip = () => {
   return (
     <View>
-      <Text>FilmSlip</Text>
+      <AutoScoll style={styles.container} endPaddingWidth={0} duration={14000}>
+        <View style={styles.gridContainer}>
+            {slipData?.map((item,index) => (
+                <View key={index} style={styles.gridItem}>
+                    <Text style={styles.gridText}>
+                        {"     "}{item}
+                    </Text>
+                    <Text style={styles.gridTextStart}>
+                        {"     "}
+                    </Text>
+                    <Icon name='star-four-points' iconFamily='MaterialCommunityIcons' color='#888' size={18}/>
+                </View>
+            ))}
+        </View>
+      </AutoScoll>
+
     </View>
   )
 }

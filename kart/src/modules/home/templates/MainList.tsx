@@ -2,9 +2,11 @@ import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, P
 import React, { FC, useRef, useState } from 'react';
 import { dynamicDashboardData as fullData } from '@utils/db';
 import AdCarousal from '../organisms/AdCarousal';
+import Categories from '../organisms/Categories';
 
 const sectionComponents: { [key: string]: React.ComponentType<any> } = {
   ad_carousal: AdCarousal,
+  categories: Categories,
 };
 
 const PAGE_SIZE = 4;

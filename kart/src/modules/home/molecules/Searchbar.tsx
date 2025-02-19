@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
         padding : 3
     },
     contenteItems:{
-        fontSize : RFValue(10),  
-        color : Colors.text
+        fontSize : RFValue(13),  
+        color : Colors.text,
+        marginLeft : 5
     }
 })
 
