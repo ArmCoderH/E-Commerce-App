@@ -32,7 +32,7 @@ const Categories: FC = () => {
       numColumns={2}
       keyExtractor={(item) => item._id.toString()}
       renderItem={({item}) => (
-        <TouchableOpacity style={styles.itemContainer}>
+        <TouchableOpacity style={styles.itemContainer} onPress={() => navigate('products',{id : item._id, name: item.name})}>
           <Image source={{uri : item?.image_uri}} style={styles.image}/>
           <Text style={styles.name}>{item?.name}</Text>
         </TouchableOpacity>
