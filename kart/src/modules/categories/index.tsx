@@ -9,7 +9,7 @@ import { navigate } from '@navigation/NavigationUtil';
 
 const Categories: FC = () => {
   const dispatch = useAppDispatch();
-  const { data, loading, error } = useAppSelector((state) => state.categories);
+  const { data, loading, error } = useAppSelector(state => state.categories);
 
   useEffect(() => {
     console.log("Dispatching getCategories...");
@@ -24,23 +24,28 @@ const Categories: FC = () => {
         <Text style={styles.subTitle}>Explore our wide range of categories</Text>
       </View>
 
-      {loading ? (
-        <ActivityIndicator size="small" color="black" />
-      ) : error ? (
-        <Text style={styles.errorText}>Failed to load categories: {error}</Text>
-      ) : (
-        <FlatList
-          data={data}
-          numColumns={2}
-          keyExtractor={(item) => item._id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.itemContainer} onPress={() => navigate('')}>
-              <Image source={{ uri: item?.image_uri }} style={styles.image} />
-              <Text style={styles.name}>{item?.name}</Text>
-            </TouchableOpacity>
-          )}
-        />
+     {
+      loading ? 
+      <ActivityIndicator size='small' color='black'/>:
+      <FlatList
+      data={data}
+      numColumns={2}
+      keyExtractor={(item) => item._id.toString()}
+      renderItem={({item}) => (
+        <TouchableOpacity style={styles.itemContainer}>
+          <Image source={{uri : item?.image_uri}} style={styles.image}/>
+          <Text style={styles.name}>{item?.name}</Text>
+        </TouchableOpacity>
       )}
+      ListFooterComponent={<>
+      {error && 
+      <Text style={styles.subTitle}>There was an error</Text>
+      }
+      </>}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+      />
+     }
     </View>
   );
 };

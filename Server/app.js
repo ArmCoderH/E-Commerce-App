@@ -7,11 +7,14 @@ import orderRoute from "./routes/order.routes.js";
 import connectDB from './config/connect.js';
 import { PORT } from './config/config.js';
 import { buildAdminJS } from './config/setup.js';
+import cors from 'cors'
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+app.use(cors()); // Enable CORS for all requests
 
 // Routers
 app.use('/user', userRoute);
