@@ -9,6 +9,7 @@ import { navigate } from '@navigation/NavigationUtil';
 import { Colors } from '@utils/Constants';
 import OrderItem from './atoms/OrderItem';
 import LottieView from 'lottie-react-native'; // Animation
+import PlaceOrder from './atoms/PlaceOrder';
 
 const Cart = () => {
   const carts = useAppSelector(selectCartItems);
@@ -52,6 +53,9 @@ const Cart = () => {
           </TouchableOpacity>
         </View>
       )}
+      {carts.length > 0 &&
+      <PlaceOrder/> 
+      }
     </CustomSafeAreaView>
   );
 };
