@@ -7,6 +7,8 @@ import MainNavigator from './MainNavigator';
 import products from '@modules/products';
 import Cart from '@modules/cart';
 import Categories from '@modules/categories';
+import PaymentSuccess from '@modules/payment_success';
+import ARViewer from '@modules/arviewer';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +21,8 @@ const Navigation: FC = () => {
                 <Stack.Screen name="products" component={products} />
                 <Stack.Screen name="cart" component={Cart} />
                 <Stack.Screen name="Categories" component={Categories} />
+                <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
+                <Stack.Screen name="ARViewer" component={ARViewer} />
             </Stack.Navigator>
         </NavigationContainer>
     );

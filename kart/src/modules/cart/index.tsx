@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { FC } from 'react';
 import CustomSafeAreaView from '@components/atoms/CustomSafeAreaView';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useAppSelector } from '@store/reduxHook';
@@ -8,11 +8,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import { navigate } from '@navigation/NavigationUtil';
 import { Colors } from '@utils/Constants';
 import OrderItem from './atoms/OrderItem';
-import LottieView from 'lottie-react-native'; // Animation
 import PlaceOrder from './atoms/PlaceOrder';
 
-const Cart = () => {
+const Cart:FC = () => {
   const carts = useAppSelector(selectCartItems);
+  const user = useAppSelector(state => state.account.user) as any;
 
   const renderItem = ({ item }: any) => <OrderItem item={item} />;
 
@@ -24,9 +24,18 @@ const Cart = () => {
       </View>
 
       {/* Delivery Address Section */}
-      <View style={styles.deliveryInfo}>
-        <Text style={styles.number}>📍</Text>
-        <Text style={styles.address}>Deliver to: Login first to place your orders</Text>
+      <View style={styles.deliveryInfoContainer}>
+        <View style={styles.deliveryInfo}>
+          <Text style={styles.label}>📞 Phone:</Text>
+          <Text style={styles.number}>{user?.phone ? user?.phone : "Not Available"}</Text>
+        </View>
+
+        <View style={styles.deliveryInfo}>
+          <Text style={styles.label}>📍 Address:</Text>
+          <Text style={styles.address}>
+            {user?.address ? user?.address : "Login first to place your orders"}
+          </Text>
+        </View>
       </View>
 
       {/* Cart Items */}
@@ -39,23 +48,15 @@ const Cart = () => {
         />
       ) : (
         <View style={styles.emptyContainer}>
-          {/* Lottie Animation for Empty Cart */}
-          {/* <LottieView
-            source={require('@assets/animations/empty-cart.json')}
-            autoPlay
-            loop
-            style={styles.animation}
-          /> */}
           <Text style={styles.emptyText}>Your cart is empty</Text>
-
           <TouchableOpacity style={styles.shopNowButton} onPress={() => navigate('Categories')}>
             <Text style={styles.shopText}>🛍️ Shop Now</Text>
           </TouchableOpacity>
         </View>
       )}
-      {carts.length > 0 &&
-      <PlaceOrder/> 
-      }
+
+      {/* Place Order Button */}
+      {carts.length > 0 && <PlaceOrder />}
     </CustomSafeAreaView>
   );
 };
@@ -77,33 +78,43 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  deliveryInfoContainer: {
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 10,
+    marginHorizontal: 16,
+    marginVertical: 10,
+    elevation: 3, // Android shadow
+    shadowColor: "#000", // iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
   deliveryInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginVertical: 10,
-    backgroundColor: '#F7F7F7',
-    paddingVertical: 12,
-    borderRadius: 8,
+    marginBottom: 6,
   },
-  number: {
-    fontSize: RFValue(16),
+  label: {
+    fontSize: RFValue(14),
+    fontWeight: 'bold',
+    color: '#333',
     marginRight: 8,
   },
+  number: {
+    fontSize: RFValue(14),
+    color: '#444',
+  },
   address: {
+    fontSize: RFValue(14),
     color: '#666',
-    fontSize: RFValue(12),
+    flexShrink: 1, // Ensures address wraps properly
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-  },
-  animation: {
-    width: 220,
-    height: 220,
-    marginBottom: 12,
   },
   emptyText: {
     fontSize: RFValue(14),

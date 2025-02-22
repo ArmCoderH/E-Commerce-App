@@ -15,6 +15,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors()); // Enable CORS for all requests
+app.use(cors({ origin: "*" }));
+
 
 // Routers
 app.use('/user', userRoute);

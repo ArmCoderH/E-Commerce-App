@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@reactvision/react-viro": "^2.42.0"
+  }
+}

@@ -19,34 +19,34 @@ const generateToken = (user) => {
 
 //login signup API
 
-const loginOrSignup = async(req,res) => {
-    const {phone,address} = req.body;
+const loginOrSignup = async (req, res) => {
+    const { phone, address } = req.body;
     try {
-        const user = await User.findOne({phone})
-        if(!user){
-            //make new user
-            user = new User({phone,address})
-            await user.save();  
-        }else{
+        let user = await User.findOne({ phone });
 
-
-            // when user is already exit then update existing user address
+        if (!user) {
+            // Create a new user if not found
+            user = new User({ phone, address });
+        } else {
+            // Update existing user address
             user.address = address;
-            await user.save();
         }
 
-    const {accessToken,refreshToken} = generateToken(user.toObject());
-    res.status(200).json({
-        user,
-        refreshToken,
-        accessToken
-    })
+        await user.save(); // Save user after creating/updating
+
+        const { accessToken, refreshToken } = generateToken(user.toObject());
+
+        res.status(200).json({
+            user,
+            refreshToken,
+            accessToken,
+        });
     } catch (error) {
-        console.log(error);
-        //server error check
-        res.status(500).json({error: error.message});
+        console.error("Login Error:", error);
+        res.status(500).json({ error: error.message });
     }
-}
+};
+
 
 
 
